@@ -18,20 +18,15 @@ void test(torch::jit::script::Module model,torch::Device device, DataLoader& dat
   int32_t correct = 0;
   for (const auto& batch : data_loader) {
     auto data = batch.data.to(device), targets = batch.target.to(device);
-    auto output = model.forward(data);
-    test_loss += torch::nll_loss(
-                     output,
-                     targets,
-                     /*weight=*/{},
-                     torch::Reduction::Sum)
-                     .template item<float>();
+    std::vector<torch::jit::IValue> input;
+    input.push_back(data);
+    auto output = model.forward(data).toTensor();
     auto pred = output.argmax(1);
     correct += pred.eq(targets).sum().template item<int64_t>();
   }
   test_loss /= dataset_size;
   std::printf(
-      "\nTest set: Average loss: %.4f | Accuracy: %.3f\n",
-      test_loss,
+      "\nTest set: Accuracy: %.3f\n",
       static_cast<double>(correct) / dataset_size);
 }
 
