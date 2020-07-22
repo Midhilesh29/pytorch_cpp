@@ -20,14 +20,17 @@ void test(torch::jit::script::Module model,torch::Device device, DataLoader& dat
     auto data = batch.data.to(device), targets = batch.target.to(device);
     std::vector<torch::jit::IValue> input;
     input.push_back(data);
-    auto output = model.forward(data).toTensor();
+    auto output = model.forward(input).toTensor();
     auto pred = output.argmax(1);
     correct += pred.eq(targets).sum().template item<int64_t>();
   }
+
+  /*
   test_loss /= dataset_size;
   std::printf(
       "\nTest set: Accuracy: %.3f\n",
       static_cast<double>(correct) / dataset_size);
+*/
 }
 
 int main(int argc, const char* argv[]) {
