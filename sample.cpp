@@ -36,7 +36,7 @@ int main(int argc, const char* argv[]) {
   	std::cerr << "usage: example-app <path-to-exported-script-module>\n";
   	return -1;
   }
-
+  kDataRoot = argv[2];
   torch::manual_seed(1);
   torch::DeviceType device_type = torch::kCPU;
   torch::Device device(device_type);
@@ -53,25 +53,4 @@ int main(int argc, const char* argv[]) {
   std::cout<<"Data size:"<<test_dataset_size<<std::endl;
   auto test_loader = torch::data::make_data_loader(std::move(test_dataset), kTestBatchSize);
   test(module, device, *test_loader, test_dataset_size);
-
-/*
-
-  try{
-    module = torch::jit::load(argv[1]);
-    //module.to(device);
-
-    auto test_dataset = torch::data::datasets::MNIST(
-              kDataRoot, torch::data::datasets::MNIST::Mode::kTest)
-              .map(torch::data::transforms::Normalize<>(0.1307, 0.3081))
-              .map(torch::data::transforms::Stack<>());
-    const size_t test_dataset_size = test_dataset.size().value();
-
-    std::cout<<"Data size:"<<test_dataset_size;
-    auto test_loader = torch::data::make_data_loader(std::move(test_dataset), kTestBatchSize);
-    test(module, device, *test_loader, test_dataset_size);
-  }
-  catch (const c10::Error& e){
-  	std::cerr << "error loading the model\n";
-  	return -1;
-  }*/
 }
