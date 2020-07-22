@@ -6,7 +6,7 @@
 #include <vector>
 
 const char* kDataRoot = "../data";
-const int64_t kTestBatchSize = 1000;
+const int64_t kTestBatchSize = 1;
 const int64_t kNumberOfEpochs = 10;
 
 template <typename DataLoader>
@@ -21,9 +21,9 @@ void test(torch::jit::script::Module model,torch::Device device, DataLoader& dat
     std::vector<torch::jit::IValue> input;
     input.push_back(data);
     auto output = model.forward(input).toTensor();
-    std::cout<<output<<std::endl;
     auto pred = output.argmax(1);
     correct += pred.eq(targets).sum().template item<int64_t>();
+    std::cout<<"Target:"<<targets<<" "<<"Predicted:"<<pred<<std::endl;
   }
   std::printf(
       "\nTest set: Accuracy: %.3f\n",
