@@ -21,7 +21,7 @@ void test(torch::jit::script::Module model,torch::Device device, DataLoader& dat
     std::vector<torch::jit::IValue> input;
     input.push_back(data);
     auto output = model.forward(input).toTensor();
-    std::cout<<output<<endl;
+    std::cout<<output<<std::endl;
     //auto pred = output.argmax(1);
     //correct += pred.eq(targets).sum().template item<int64_t>();
   }
