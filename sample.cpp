@@ -52,7 +52,7 @@ int main(int argc, const char* argv[]) {
               .map(torch::data::transforms::Stack<>());
     const size_t test_dataset_size = test_dataset.size().value();
 
-    std::cout<<"Data size:"<<test_dataset_size<<endl;
+    std::cout<<"Data size:"<<test_dataset_size;
     /*
     auto test_loader = torch::data::make_data_loader(std::move(test_dataset), kTestBatchSize);
     test(module, device, *test_loader, test_dataset_size);*/
