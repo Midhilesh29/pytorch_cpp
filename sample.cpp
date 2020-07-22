@@ -24,13 +24,10 @@ void test(torch::jit::script::Module model,torch::Device device, DataLoader& dat
     auto pred = output.argmax(1);
     correct += pred.eq(targets).sum().template item<int64_t>();
   }
-
-  /*
   test_loss /= dataset_size;
   std::printf(
       "\nTest set: Accuracy: %.3f\n",
       static_cast<double>(correct) / dataset_size);
-*/
 }
 
 int main(int argc, const char* argv[]) {
@@ -47,15 +44,14 @@ int main(int argc, const char* argv[]) {
 
   try{
     module = torch::jit::load(argv[1]);
-    /*
-    module.to(device);
+    //module.to(device);
     auto test_dataset = torch::data::datasets::MNIST(
               kDataRoot, torch::data::datasets::MNIST::Mode::kTest)
               .map(torch::data::transforms::Normalize<>(0.1307, 0.3081))
               .map(torch::data::transforms::Stack<>());
     const size_t test_dataset_size = test_dataset.size().value();
     auto test_loader = torch::data::make_data_loader(std::move(test_dataset), kTestBatchSize);
-    test(module, device, *test_loader, test_dataset_size);*/
+    test(module, device, *test_loader, test_dataset_size);
   }
   catch (const c10::Error& e){
   	std::cerr << "error loading the model\n";
