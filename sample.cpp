@@ -47,8 +47,8 @@ int main(int argc, const char* argv[]) {
 
   try{
     module = torch::jit::load(argv[1]);
-    module.to(device);
     /*
+    module.to(device);
     auto test_dataset = torch::data::datasets::MNIST(
               kDataRoot, torch::data::datasets::MNIST::Mode::kTest)
               .map(torch::data::transforms::Normalize<>(0.1307, 0.3081))
