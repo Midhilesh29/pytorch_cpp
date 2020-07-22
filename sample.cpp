@@ -31,11 +31,6 @@ void test(torch::jit::script::Module model,torch::Device device, DataLoader& dat
 }
 
 int main(int argc, const char* argv[]) {
-
-  if(argc!=2){
-  	std::cerr << "usage: example-app <path-to-exported-script-module>\n";
-  	return -1;
-  }
   kDataRoot = argv[2];
   torch::manual_seed(1);
   torch::DeviceType device_type = torch::kCPU;
