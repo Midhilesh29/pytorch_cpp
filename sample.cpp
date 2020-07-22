@@ -41,11 +41,11 @@ int main(int argc, const char* argv[]) {
   }
 
   torch::manual_seed(1);
-  torch::DeviceType device_type = torch::kCUDA;
+  torch::DeviceType device_type = torch::kCPU;
   torch::Device device(device_type);
   torch::jit::script::Module module;
   module = torch::jit::load(argv[1]);
-//module.to(device);
+  module.to(device);
 
   auto test_dataset = torch::data::datasets::MNIST(
             kDataRoot, torch::data::datasets::MNIST::Mode::kTest)
