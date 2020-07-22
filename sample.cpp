@@ -48,15 +48,15 @@ int main(int argc, const char* argv[]) {
   torch::jit::script::Module module;
 
   try{
-    model = torch::jit::load(argv[1]);
-    model.to(device);
+    module = torch::jit::load(argv[1]);
+    module.to(device);
     auto test_dataset = torch::data::datasets::MNIST(
               kDataRoot, torch::data::datasets::MNIST::Mode::kTest)
               .map(torch::data::transforms::Normalize<>(0.1307, 0.3081))
               .map(torch::data::transforms::Stack<>());
     const size_t test_dataset_size = test_dataset.size().value();
     auto test_loader = torch::data::make_data_loader(std::move(test_dataset), kTestBatchSize);
-    test(model, device, *test_loader, test_dataset_size);
+    test(module, device, *test_loader, test_dataset_size);
   }
   catch (const c10::Error& e){
   	std::cerr << "error loading the model\n";
