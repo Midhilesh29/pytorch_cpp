@@ -5,7 +5,7 @@
 #include <memory>
 #include <vector>
 
-const char* kDataRoot = "./data";
+const char* kDataRoot = "../data";
 const int64_t kTestBatchSize = 1000;
 const int64_t kNumberOfEpochs = 10;
 
