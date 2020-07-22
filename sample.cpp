@@ -11,7 +11,7 @@ const int64_t kNumberOfEpochs = 10;
 
 template <typename DataLoader>
 
-void test(Net& model,torch::Device device, DataLoader& data_loader, size_t dataset_size) {
+void test(torch::jit::script::Module model,torch::Device device, DataLoader& data_loader, size_t dataset_size) {
   torch::NoGradGuard no_grad;
   model.eval();
   double test_loss = 0;
