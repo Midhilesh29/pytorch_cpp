@@ -38,8 +38,8 @@ void test(torch::jit::script::Module model,torch::Device device, DataLoader& dat
 int main(int argc, const char* argv[]) {
 
   if(argc!=2){
-  	std::cerr << "usage: example-app <path-to-exported-script-module>\n"
-  	return -1
+  	std::cerr << "usage: example-app <path-to-exported-script-module>\n";
+  	return -1;
   }
 
   torch::manual_seed(1);
