@@ -37,28 +37,28 @@ void test(Net& model,torch::Device device, DataLoader& data_loader, size_t datas
 
 int main(int argc, const char* argv[]) {
 
-	if(argc!=2){
-		std::cerr << "usage: example-app <path-to-exported-script-module>\n"
-		return -1
-	}
+  if(argc!=2){
+  	std::cerr << "usage: example-app <path-to-exported-script-module>\n"
+  	return -1
+  }
 
-	torch::manual_seed(1);
-	torch::DeviceType device_type = torch::kCUDA;
-	torch::Device device(device_type);
-	torch::jit::script::Module module;
+  torch::manual_seed(1);
+  torch::DeviceType device_type = torch::kCUDA;
+  torch::Device device(device_type);
+  torch::jit::script::Module module;
 
-	try{
-		model = torch::jit::load(argv[1]);
-	}
-	catch (const c10::Error& e){
-		std::cerr << "error loading the model\n";
-		return -1
-	}
-	model.to(device);
-	auto test_dataset = torch::data::datasets::MNIST(
-	                  kDataRoot, torch::data::datasets::MNIST::Mode::kTest)
-	                  .map(torch::data::transforms::Normalize<>(0.1307, 0.3081))
-	                  .map(torch::data::transforms::Stack<>());
+  try{
+  	model = torch::jit::load(argv[1]);
+  }
+  catch (const c10::Error& e){
+  	std::cerr << "error loading the model\n";
+  	return -1
+  }
+  model.to(device);
+  auto test_dataset = torch::data::datasets::MNIST(
+                    kDataRoot, torch::data::datasets::MNIST::Mode::kTest)
+                    .map(torch::data::transforms::Normalize<>(0.1307, 0.3081))
+                    .map(torch::data::transforms::Stack<>());
   const size_t test_dataset_size = test_dataset.size().value();
   auto test_loader = torch::data::make_data_loader(std::move(test_dataset), kTestBatchSize);
   test(model, device, *test_loader, test_dataset_size);
