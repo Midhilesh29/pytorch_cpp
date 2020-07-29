@@ -23,7 +23,6 @@ void test(torch::jit::script::Module model,torch::Device device, DataLoader& dat
     auto output = model.forward(input).toTensor();
     auto pred = output.argmax(1);
     correct += pred.eq(targets).sum().template item<int64_t>();
-    std::cout<<"Target:"<<targets<<" "<<"Predicted:"<<pred<<std::endl;
   }
   std::printf(
       "\nTest set: Accuracy: %.3f\n",
