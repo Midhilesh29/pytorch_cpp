@@ -39,7 +39,7 @@ int main(int argc, const char* argv[]) {
     std::cout << "CUDA available! Training on GPU." << std::endl;
     device_type = torch::kCUDA;
   } else {
-    std::cout << "Training on CPU." << std::endl;
+    std::cout << "Testing on CPU." << std::endl;
     device_type = torch::kCPU;
   }
   torch::Device device(device_type);
