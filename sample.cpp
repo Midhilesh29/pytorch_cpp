@@ -34,7 +34,7 @@ int main(int argc, const char* argv[]) {
   kDataRoot = argv[2];
   torch::manual_seed(1);
 
-  torch::DeviceType device_type
+  torch::DeviceType device_type;
 
   if (torch::cuda::is_available()) {
     std::cout << "CUDA available! Training on GPU." << std::endl;
